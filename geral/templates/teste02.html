@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block title %}teste 01{% endblock title %}
+{% block breadcrumb %}{{block.super}}teste 01{% endblock breadcrumb%} 
+ 
+{% block conteudo %}
+    <h1>{{result}}</h1>
+    <h2>{{result.dia}}</h2>
+    <h2>{{result.mapa}}</h2>
+{% endblock conteudo %}

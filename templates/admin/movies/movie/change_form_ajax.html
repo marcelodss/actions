@@ -1,0 +1,12 @@
+{% extends "admin/change_form.html" %}
+{% load admin_urls %}
+{% load i18n l10n admin_urls %}
+
+{% block submit_buttons_bottom %} 
+
+{{ block.super }}
+
+  <p><span style="color:red">verificar comportamento com inlines</span></p>
+  <input onclick="mySerialize('{{original.pk}}')" type="button" value="teste serialização button">
+
+{% endblock %}

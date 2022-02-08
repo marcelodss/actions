@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock title %}
+
+{% block breadcrumb %}Home{% endblock breadcrumb %}
+    
+{% block conteudo %}
+    
+    <h1>{{result}}</h1>
+    <h2>{{result.multiplicacao}}</h2>
+    <h2>{{result.extra}}</h2>
+
+    {% include "footer.html" %}
+
+{% endblock conteudo %}
+    
+

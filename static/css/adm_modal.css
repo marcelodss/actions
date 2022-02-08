@@ -1,0 +1,105 @@
+/* @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+
+* {
+    font-family: 'Open Sans', sans-serif;
+}
+
+p {
+    text-align: justify;
+} */
+
+/* VARIABLE DEFINITIONS */
+/* @import url('../admin/css/base.css'); */
+@import url('root_variables.css'); 
+
+.modal {
+    background-color: rgba(0, 0, 0, 0);
+    position: fixed;
+    display: none;
+    width: 100%;
+    height: 80%;
+    top: 10%;
+    bottom: 10%;
+    left: 0%;
+    right: 0%;
+    z-index: 1;
+    overflow: auto;
+}
+
+.modal-content {
+    margin: 0 auto;
+    margin-top: 3%;
+    width: 25%; 
+    background-color: var(--body-bg);
+    padding: 0;
+    box-shadow: 10px 15px 20px var(--body-fg);
+    overflow: auto;
+}
+
+.modal-header{
+    background-color: var(--header-bg);
+}
+
+.modal-header h1{
+    font-weight: bold;
+    text-align: center;
+    color: var(--body-bg);
+}
+
+.modal-buttons{
+    background-color: var(--selected-bg);
+}
+
+.modal-body {
+    text-align: left;
+    background-color: var(--body-bg);
+}
+
+.modal-body span{
+    font-weight: bold;
+}
+
+.modal-footer{
+    background-color: var(--header-bg);
+}
+
+.modal-header, .modal-body, .modal-buttons, .modal-footer {
+    padding: 10px;
+}
+
+.btn_default_modal {
+    color: var(--button-fg) !important;
+    background-color: var(--default-button-bg) !important;
+}
+
+.btn_default_modal:hover {
+    opacity: 1 !important;
+    background-color: var(default-button-hover-bg) !important;
+} 
+
+.btn_delete_modal {
+    color: var(--button-fg) !important;
+    background-color: var(--delete-button-bg) !important;
+}
+
+.btn_delete_modal:hover {
+    opacity: 1 !important;
+    background-color: var(--delete-button-hover-bg) !important;
+} 
+
+.btn_close_modal {
+    color: var(--button-fg) !important;
+    background-color: var(--close-button-bg) !important;
+
+}
+
+.btn_close_modal:hover {
+    opacity: 1 !important;
+    background-color: var(--close-button-hover-bg) !important;
+} 
+
+.btn_default_modal, .btn_delete_modal, .btn_close_modal {
+    opacity: 0.8 !important;
+    transition: 0.15s !important;
+}
+

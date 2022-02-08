@@ -1,0 +1,39 @@
+<!-- modal inicio -->
+<div id="dv-modal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h1>Incluir Filmes</h1>
+        </div>
+
+        <div class="modal-buttons">
+            <input class="btn_default_modal" type="submit" value="Confirmar" id="add_movie_modal" name="_add_movie_modal" onclick="return closeModal('dv-modal');">
+            <input class="btn_close_modal" type="button" value="Cancelar" onclick="return closeModal('dv-modal');" >
+        </div>
+
+        <div class="modal-body">
+            
+            <p>Confirmar a inclusão de Filme com <span id="modal_text_span"></span> ao {{ opts.verbose_name|capfirst }} {{original}}? </p>
+
+            <p>Mussum Ipsum, cacilds vidis litro abertis. In elementis mé pra quem é amistosis quis leo. 
+                Delegadis gente finis, bibendum egestas augue arcu ut est. 
+                Aenean aliquam molestie leo, vitae iaculis nisl. A ordem dos tratores não altera o pão duris.</p>
+            <p>Mussum Ipsum, cacilds vidis litro abertis. In elementis mé pra quem é amistosis quis leo. 
+                Delegadis gente finis, bibendum egestas augue arcu ut est. 
+                Aenean aliquam molestie leo, vitae iaculis nisl. A ordem dos tratores não altera o pão duris.</p>
+            <p>Mussum Ipsum, cacilds vidis litro abertis. In elementis mé pra quem é amistosis quis leo. 
+                Delegadis gente finis, bibendum egestas augue arcu ut est. 
+                Aenean aliquam molestie leo, vitae iaculis nisl. A ordem dos tratores não altera o pão duris.</p>
+            <p>Mussum Ipsum, cacilds vidis litro abertis. In elementis mé pra quem é amistosis quis leo. 
+                Delegadis gente finis, bibendum egestas augue arcu ut est. 
+                Aenean aliquam molestie leo, vitae iaculis nisl. A ordem dos tratores não altera o pão duris.</p>
+
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS02XR40FeOWQQmbIjWK97F6WM0p3Awfue38Q&usqp=CAU" 
+            alt="Kyka, coisa linda.." style="width: 20%; display: block; margin-left: auto; margin-right: auto;">
+            
+                <p>fim</p>
+        </div>
+        <div class="modal-footer">
+        </div>
+    </div>
+</div>
+<!-- modal fim -->

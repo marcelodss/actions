@@ -1,0 +1,19 @@
+{% extends "admin/base_site.html" %}
+
+{% block content %}
+<form action="" method="post">
+  {% csrf_token %}
+<p>
+    Tem certeza de que deseja alterar o status dos filmes abaixo para 'Ativo'?
+</p>  
+  {% for filme in filmes %}
+    <p>
+      {{ filme }}
+    </p>
+    <input type="hidden" name="_selected_action" value="{{ filme.pk }}" />
+  {% endfor %}
+
+  <input type="hidden" name="action" value="update_status_001_param_fixo_template_exclusivo" />
+  <input type="submit" name="apply" value="Atualizar"/>
+</form>
+{% endblock %}

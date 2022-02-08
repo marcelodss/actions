@@ -1,0 +1,36 @@
+{% extends "admin/change_form.html" %}
+{% load admin_urls %}
+{% load i18n l10n admin_urls %}
+
+{% block submit_buttons_bottom %} 
+
+  {{ block.super }}
+  
+  {% comment %} <!-- 
+    o input hidden abaixo (name="_confirmation" id="_confirmation") é o que 
+    garante que esta página redicionará os submits 
+    para a página de confirmação -->
+  {% endcomment %}
+  <input type="text" name="_confirmation" id="_confirmation" value="_confirmation">  
+
+  <h1>Contexto Padrão</h1>
+  <p>view {{has_view_permission}}</p>
+  <p>add {{has_add_permission}}</p>
+  <p>change {{has_change_permission}}</p>
+  <p>delete {{has_delete_permission}}</p>
+
+  <p>site_title: {{site_title}}</p>
+  <p>site_header: {{site_header}}</p>
+  <p>site_url: {{site_url}}</p>
+  <p>has_permission: {{has_permission}}</p>
+  <p>opts: {{opts}}</p>
+   
+  {% for aplicacoes in available_apps %}
+    <p>available_apps: {{aplicacoes}}</p> 
+  {% endfor %}
+  
+  <p>is_popup: {{is_popup}}</p>
+  <p>is_nav_sidebar_enabled: {{is_nav_sidebar_enabled}}</p>
+   
+  <p>original: {{original}}</p>
+{% endblock %}

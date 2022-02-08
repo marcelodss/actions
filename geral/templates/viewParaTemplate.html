@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}View para Template{% endblock title %}
+{% block breadcrumb %}{{block.super}}View para Template{% endblock breadcrumb%} 
+ 
+{% block conteudo %}
+    <h4>Loja: {{store_name}}</h4>
+    <p>Endereço: {{store_address.street}}</p>
+    <p>Cidade: {{store_address.city}} - {{store_address.state}}</p>
+    <hr/>
+    <p>Nossas Ofertas: {{store_amenities.0}} and {{store_amenities.1}}</p>
+    <p>Menu com: {{store_menu.1.1}} and {{store_menu.2.1}}</p>
+{% endblock conteudo %}

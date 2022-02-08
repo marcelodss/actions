@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}cbv View 001{% endblock title %}
+{% block breadcrumb %}{{block.super}}cbv View 001{% endblock breadcrumb%} 
+ 
+{% block conteudo %}
+<h1>Listagem 2-38 CBV herdada de View com manipulação múltipla de HTTP</h1>
+<p>Página inicialmente carregada via get</p>
+<form action="" method="get"  enctype="multipart/form-data">
+    <input type="button" value="clique para get">
+</form>
+
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <button type="submit">clique para post</button>
+</form>
+
+<p>
+    Se você pode para abrir mão do controle de um modelo sem aplicar lógica de negócios
+    elaborada ou manipulação de solicitação e resposta personalizada, 
+    a classe <strong>TemplateView</strong> oferece o caminho mais rápido para uma solução
+    em comparação com a classe <strong>View</strong> mais genérica .
+</p>
+
+<p>Para encerrar a discussão sobre visualizações baseadas em classe 
+   chegamos à classe <strong>django.views.generic.RedirectView</strong>. Semelhante 
+   à <strong>TemplateView</strong> que permite gerar rapidamente uma resposta
+    sem um método de visão, a <strong> RedirectView </strong> permite que você gere
+     rapidamente um redirecionamento HTTP - como os descritos na <a href="https://www.webforefront.com/django/viewmethodresponses.html#table-2-5">tabela 2-5</a> 
+     - sem a necessidade de um método de visualização.</p>
+
+     <p>fonte: 
+        <a href="https://www.webforefront.com/django/classbasedviews.html?">webforefront</a>,
+         listagem 2-37 e 2-38</p>
+{% endblock conteudo %}
+
+
+    
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+</head>
+<body>
+ 
+        
+</body>
+</html>

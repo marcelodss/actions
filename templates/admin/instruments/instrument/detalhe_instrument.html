@@ -1,0 +1,73 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_urls static %}
+
+{% comment %} {% load admin_urls %}  {% endcomment %}
+
+{% block extrastyle %} {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{% static 'admin/css/forms.css' %}">
+{% endblock extrastyle %}
+
+{% block extrahead %} {{ block.super }}
+    {{ media }}
+    <script src="{% url 'admin:jsi18n' %}"></script>
+    <script src="{% static 'admin/js/cancel.js' %}" async></script>
+{% endblock extrahead %}
+
+{% block bodyclass %} {{ block.super }} 
+    app-{{ opts.app_label }} model-{{ opts.model_name }} delete-confirmation
+{% endblock bodyclass %}
+
+{% if not is_popup %}
+    {% block breadcrumbs %}
+    <div class="breadcrumbs">
+        <a href="{% url 'admin:index' %}">{% translate 'Home' %}</a>
+        &rsaquo; <a href="{% url 'admin:app_list' app_label=opts.app_label %}">{{ opts.app_config.verbose_name }}</a>
+        &rsaquo; <a href="{% url opts|admin_urlname:'changelist' %}">{{ opts.verbose_name_plural|capfirst }}</a>
+        &rsaquo; {{ title }}
+    </div>
+    
+    {% endblock breadcrumbs %}
+{% endif %}
+
+{% block content %} 
+<div id="content-main">
+    <div id="to-copy">
+        <h1>{{instrument}}</h1>
+        <p>ID: {{instrument.id}}</p>
+        <p>Nome: {{instrument.name}}</p>
+        <p>Preço: {{instrument.price}}</p>
+        <p>Data: {{instrument.data }}</p>
+        <p>Data: {{instrument.data|date:'j \d\e F \d\e Y' }}</p>
+    </div>
+</div>
+<div class="submit-row">
+    <a href="#" onclick="CopyToClipboard('to-copy')" class="closelink">Copiar Texto</a>
+    <a href="#" onclick="history.back()" class="closelink">Voltar</a>
+</div>
+
+
+<script>
+    function CopyToClipboard(containerid) {
+        // Crie um novo elemento de textarea e dê-lhe id = 'temp_element'
+        const textarea = document.createElement('textarea')
+        textarea.id = 'temp_element'
+        // Passo opcional para tornar menos ruído na página, se houver!
+        textarea.style.height = 0
+        textarea.style.width = 0
+        // Agora acrescentá-lo à sua página em algum lugar, eu escolhi <body>
+        document.body.appendChild(textarea)
+        // Dê a nossa textarea um valor de qualquer div informada no parâmetro no  containerid
+        textarea.value = document.getElementById(containerid).innerText
+        // Agora copie o que houver dentro da textarea para a área de transferência
+        const selector = document.querySelector('#temp_element')
+        selector.select()
+        document.execCommand('copy')
+        // Remova a textarea
+        document.body.removeChild(textarea)
+
+        /* Alert the copied text */
+        alert("Copiou o texto:\n" + textarea.value);
+    }
+</script>
+    
+{% endblock content %}

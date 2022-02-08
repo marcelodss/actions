@@ -1,0 +1,41 @@
+.stack_labels label {
+    float: initial;
+}
+
+.stack_ul_errorlist ul[class=errorlist] {
+    margin-left: 0px;
+    padding-left: 0px;
+}
+
+.stack_div_help div[class=help] {
+    margin-left: 0px !important;
+    padding-left:0px !important;
+    white-space: nowrap; 
+    width: 50%; 
+    overflow: hidden; 
+    text-overflow: ellipsis;
+}
+
+.stack_div_help div[class=help]:hover {
+    overflow: visible;
+  }
+
+.stack_div_readonly div[class=readonly] {
+    margin-left: 0px !important;
+    padding-left:0px !important;
+    color: blue;
+    overflow: visible;
+}
+
+.div_inline_group H2 {
+    background-color:forestgreen;
+}
+
+.select_admin_autocomplete Select[class=admin-autocomplete] {
+    width: 1100px !important;
+    max-width: 85% !important;
+}
+
+
+
+

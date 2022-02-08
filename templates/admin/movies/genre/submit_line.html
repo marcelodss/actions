@@ -1,0 +1,26 @@
+{% extends 'admin/submit_line.html' %}
+
+{% block bodyclass %}{{ block.super }} app-{{ opts.app_label }} model-{{ opts.model_name }} change-form{% endblock %}
+
+{% block submit-row %} 
+<div class="wait_wrap">
+    <div id="dom"></div>
+    <script>newFunction()</script>
+
+    {% if not add %}
+        {% if opts.app_label|add:".change_"|add:opts.model_name in perms %}
+            <input type="submit" value="Adiciona Filme" id="add_movie" name="_add_movie">
+            <!-- <input type="submit" value="Adiciona Filme" id="add_movie" name="_add_movie" onclick="return confirm('Deseja enviar Filme?')"> -->
+            <input type="button" value="Adiciona Via Modal" onclick="return openModal('dv-modal', [['Score', 'id_new_score', 'value'], ['Title', 'id_title', 'value'], ['Usuário', 'id_usuario', 'outros'], ['Alguma Data', 'id_data', 'value']]);">
+            <!-- <input type="button" value="Adiciona Via Modal" onclick="return openModal('dv-modal', null);"> -->
+        {% endif %}
+    {% endif %}
+    {{ block.super }}
+</div>
+<div class="wait_off"></div>
+
+<!-- modal inicio -->
+{% include "admin/modais_include/genre/md_incluir_filme.html" %}
+<!-- modal fim -->
+{% endblock %}
+

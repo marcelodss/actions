@@ -1,0 +1,10 @@
+*.idea
+*.sqlite3
+*pyc
+.DS_Store
+.env
+.vscode/
+build/
+media/clients_photos/*
+nadm_carga/
+tmp/

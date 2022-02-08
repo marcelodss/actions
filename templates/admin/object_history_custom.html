@@ -1,0 +1,105 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_urls %}
+
+{% load i18n static %}
+
+{% comment %}
+  <!-- até aqui, ok -->
+{% endcomment %}
+  
+{% block extrastyle %} {{ block.super }}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/adm_inline_paginator.css' %}">
+{% endblock extrastyle %}
+
+{% block branding %}
+{% if not request.GET.is_blank %}
+  {{ block.super }}
+{% else %}
+  <h1 id="site-name"><a target="_blank" href="{% url 'admin:index' %}">{{ site_header|default:_('Django administration') }}</a></h1>
+{% endif %}
+{% endblock %}
+  
+{% block usertools %}
+  {% if not request.GET.is_blank %}
+    {{ block.super }}
+  {% else %}
+    <span id="user-tools">
+          {% translate 'Welcome,' %}
+          <strong>{% firstof user.get_short_name user.get_username %}</strong>.
+          <a href="{% url 'admin:logout' %}">{% translate 'Log out' %}</a>
+    </span>
+  {% endif %}
+{% endblock usertools %}
+
+{% block breadcrumbs %}
+  {% if not request.GET.is_blank %}
+    <div class="breadcrumbs">
+      <a href="{% url 'admin:index' %}">{% translate 'Home' %}</a>
+      &rsaquo; <a href="{% url 'admin:app_list' app_label=app_name %}">{{app_label|capfirst}}</a>
+      &rsaquo; <a href="{{ change_list_url }}">{{model_label_plural|capfirst}}</a>
+      &rsaquo; <a href="{{ change_url }}">{{obj|truncatewords:"18"}}</a>
+      &rsaquo; {% translate 'History' %}
+    </div>
+    {% endif %}
+{% endblock breadcrumbs %}
+
+{% block content %} 
+  <div id="content-main">
+
+    <h3>Objeto: {{obj}}</h3>
+
+    <div class="module">
+    {% if log_history %}
+    <table id="change-history">
+      <thead>
+      <tr>
+          <th scope="col">{% translate 'Date/time' %}</th>
+          <th scope="col">{% translate 'User' %}</th>
+          <th scope="col">{% translate 'Action' %}</th>
+      </tr>
+      </thead>
+      <tbody>
+      {% for history in log_history %}
+      <tr>
+          <th scope="row">{{ history.0|date:"DATETIME_FORMAT" }}</th>
+          <td>{{ history.1.get_username }}{% if history.1.get_full_name %} ({{ history.1.get_full_name }}){% endif %}</td>
+          <td>{{ history.2 }}</td>
+      </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    <p class="paginator">
+      <span class="btn-page results">
+        {{logCount}} {% if logCount == 1 %}Ação{% else %}Ações{% endif %} para {{obj|truncatewords:"18"}}
+      </span>
+    </p>
+    <hr>
+    {% else %}
+      <br>
+      <hr>
+      <p>{% translate 'This object doesn’t have a change history. It probably wasn’t added via this admin site.' %}</p>
+      <hr>
+    {% endif %}
+    </div>
+  
+    {% if log_history.has_previous or log_history.has_next %}
+    <div>
+      <hr>
+      <p class="paginator">
+        {% for i in page_range|default_if_none:log_history.paginator.get_elided_page_range %}
+            {% if log_history.number == i %}
+                <span class="btn-page page-selected">{{ i }}</span>
+            {% else %}
+                {% if i == log_history.paginator.ELLIPSIS %}
+                    <span class="btn-page page-selected">{{ i }}</span>
+                {% else %}
+                    <a class="btn-page page-available" href="?opts={{opts}}&pk={{pk}}&pg={{ i }}&is_blank=1">{{ i }}</a>
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+      </p>
+      <hr>
+    </div>
+    {% endif %}
+  </div>
+{% endblock content %}

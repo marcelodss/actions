@@ -1,0 +1,49 @@
+{% extends 'admin/change_list.html' %}
+{% load i18n admin_urls %}
+
+{% block bodyclass %}{{ block.super }} app-{{ opts.app_label }} model-{{ opts.model_name }} change-list{% endblock %}
+
+{% block object-tools %} 
+{{ block.super }}
+<br>
+<br>
+<div>
+    <ul class="object-tools">
+        <li><a href="#">Teste</a></li>
+        <li><a href="#">Teste 0</a></li>
+        <li><a href="#">Teste 1</a></li>
+        <li><a href="#">Teste 2</a></li>
+    </ul>
+</div>
+<br>
+<br>
+<div>
+    <ul class="object-tools">
+        <li><a href="#">Teste X</a></li>
+        <li><a href="#">Teste A</a></li>
+        <li><a href="#">Teste B</a></li>
+        <li><a href="#">Teste C</a></li>
+    </ul>
+</div>
+
+
+
+{% endblock object-tools %}
+
+{% block content %}
+<!-- ------------------------------------------------- -->
+{% if opts.app_label|add:".change_"|add:opts.model_name in perms %}   
+<div class="submit-row">
+<form method="POST">
+    {% csrf_token %}
+    <a href="#"><input type="submit" class="default" name="action" formaction="zerar_precos/" value="Zerar Preços"/></a>
+    <a href="#"><input type="submit" name="action" formaction="dobrar_precos/" value="Dobrar Preços"/></a>
+</form>
+</div>
+<br>
+<br>
+{% endif %} 
+<!-- ------------------------------------------------- -->
+{{ block.super }}
+{% endblock content %}
+

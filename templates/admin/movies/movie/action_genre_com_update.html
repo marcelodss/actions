@@ -1,0 +1,45 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_urls static %}
+{% load admin_urls %}
+
+{% block extrahead %}
+    {{ block.super }}
+    {{ media }}
+    <script src="{% static 'admin/js/cancel.js' %}" async></script>
+{% endblock %}
+
+{% block bodyclass %}{{ block.super }} app-{{ opts.app_label }} model-{{ opts.model_name }} delete-confirmation{% endblock %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+<a href="{% url 'admin:index' %}">{% translate 'Home' %}</a>
+&rsaquo; <a href="{% url 'admin:app_list' app_label=opts.app_label %}">{{ opts.app_config.verbose_name }}</a>
+&rsaquo; <a href="{% url opts|admin_urlname:'changelist' %}">{{ opts.verbose_name_plural|capfirst }}</a>
+&rsaquo; {{ title }}
+</div>
+{% endblock %}
+
+{% block content %}
+    <form action="" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="set_genre_action_002">
+        <input type="hidden" name="do_action" value="yes">
+        <div>
+            {{ form.genre }} 
+            <input type="submit" value="{% translate 'Yes, I’m sure' %}">
+            <a href="#" class="button cancel-link">{% translate "No, take me back" %}</a>
+            {{ form.genre.errors }} 
+        </div>
+        <h2>{{Question}}</h2>
+        <ul>
+            {% for object in objects %}
+                <li>
+                    <a href="{{ object.pk }}/">{{ object.title }}</a> - {{ object.genre }}
+                    <input type="hidden" name="_selected_action" value="{{ object.pk }}">
+                    <!-- _selected_action é padrão do django;
+                         retorna as pk's selecioanas na change_list-->
+                </li>
+            {% endfor %}
+        </ul>
+    </form>
+{% endblock %}

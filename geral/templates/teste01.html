@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block title %}Teste 01 com ou sem parâmetro{% endblock title %}
+{% block breadcrumb %}{{block.super}}Teste 01 com ou sem parâmetr{% endblock breadcrumb%} 
+ 
+{% block conteudo %}
+    <h1>{{result}}</h1>
+    <h2>{{result.multiplicacao}}</h2>
+    <h2>{{result.extra}}</h2>
+{% endblock conteudo %}

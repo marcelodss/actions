@@ -1,0 +1,153 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_urls static %}
+
+{% comment %} {% load admin_urls %}  {% endcomment %}
+
+{% block extrastyle %} {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{% static 'admin/css/forms.css' %}">
+{% endblock extrastyle %}
+
+{% block extrahead %} {{ block.super }}
+    {{ media }}
+    <script src="{% url 'admin:jsi18n' %}"></script>
+    <script src="{% static 'admin/js/cancel.js' %}" async></script>
+    <!-- extrahead -->
+{% endblock extrahead %}
+
+{% block bodyclass %} {{ block.super }} 
+    app-{{ opts.app_label }} model-{{ opts.model_name }} delete-confirmation
+{% endblock bodyclass %}
+
+{% if not is_popup %}
+    {% block breadcrumbs %}
+    <div class="breadcrumbs">
+        <a href="{% url 'admin:index' %}">{% translate 'Home' %}</a>
+        &rsaquo; <a href="{% url 'admin:app_list' app_label=opts.app_label %}">{{ opts.app_config.verbose_name }}</a>
+        &rsaquo; <a href="{% url opts|admin_urlname:'changelist' %}">{{ opts.verbose_name_plural|capfirst }}</a>
+        &rsaquo; {{ title }}
+    </div>
+    {% endblock breadcrumbs %}
+{% endif %}
+
+{% block content %} 
+
+<h1>VER:</h1>
+<ul>
+    <li>Opção para lista ou tabela</li>
+    <li>Ver verbose name</li>
+    <li>Opção para formatar data</li>
+    <li>link para PK em tabelas</li>
+</ul>
+
+<div id="content-main">
+    {% if form.errors %}
+        <p class="errornote">
+            {% if errors|length == 1 %}{% translate "Please correct the error below." %}{% else %}{% translate "Please correct the errors below." %}{% endif %}
+        </p>
+        {{ form.non_field_errors }}
+    {% elif erros %}
+        <p class="errornote">{{ erros }}</p>
+    {% endif %}
+
+    <form action="" method="post" {% if form.is_multipart %}enctype="multipart/form-data"{% endif %}>
+        {% csrf_token %}
+        <div>
+            <input type="hidden" name="action" value="{{action_name}}">
+            <!-- {{action_name}} deve ser o nome da action utilizada -->
+            <input type="hidden" name="{{post_action}}" value="Atualizar">
+            <!-- {{post_action}} vem da função que roda a action no bloco que testa 
+                o retorno do método Post: xxx in request.POST: -->
+        </div>
+
+        <div>
+            {% comment %} {{ form.genre }} {% endcomment %}
+            {% comment %} {{ form.as_p }} {% endcomment %} 
+            <!-- O modelo 'admin/includes/fieldset.html' exibe os campos do formulário no mesmo formato que admin/change_form.html
+                 Fonte: https://www.dmertl.com/blog/?p=116 -->
+            {% block field_sets %}
+                {% for fieldset in adminform %}
+                    {% include "admin/includes/fieldset.html" %}
+                {% endfor %}
+            {% endblock field_sets %}
+        </div>
+
+        <div class="submit-row"> 
+            <input type="submit" value="{% translate 'Yes, I’m sure' %}">
+            <a href="#" class="button cancel-link">{% translate "No, take me back" %}</a>
+        </div>
+
+        <h2>{{ question }}</h2>
+        <!-- Lista não Ordenada com Queryset: inicio  -->
+        <h1>Lista não Ordenada com Queryset</h1>
+        <ul>
+            {% for campo_t in campos_tupla %}
+            <li>
+                <a href="{{ campo_t.pk }}/" target="_blank">{{ campo_t.title }} </a> - {{ campo_t.genre__title }} - {{campo_t.data}} - {{campo_t.data_hora}}
+                <input type="hidden" name="_selected_action" value="{{ campo_t.pk }}">
+                <!-- _selected_action é padrão do django;
+                    retorna as pk's selecioanas na change_list-->
+
+            </li>
+            {% endfor %}
+        </ul>
+        <!-- Lista não Ordenada com Queryset: fim  -->
+
+
+        <!-- Lista não Ordenada com List: inicio  -->
+        <h1>Lista não Ordenada com List</h1>
+        <ul>
+            {% for campos in dados.corpo_list %}
+                <li>
+                    {% for campo in  campos|slice:"1:" %}
+                        {% if forloop.first is True  %}
+                            <a href="{{ campos|first }}" target="_blank">{{ campo }}; </a>
+                            <input type="hidden" name="_selected_action" value="{{ campos|first }}">
+                            <!-- _selected_action é padrão do django;
+                                retorna as pk's selecioanas na change_list-->
+
+                        {% else %}
+                            {{ campo }}; 
+                        {% endif %}
+                    {% endfor %}
+                </li>
+            {% endfor %}
+        </ul>
+        
+        <!-- Lista não Ordenada com List: Fim  -->
+
+        
+        <!-- Tabela from List: inicio  -->
+        <h1>Tabela from List</h1>
+        <table style="width:100%">
+            <tr>
+                {% for cabecalho in dados.cabecalho_list %}
+                <th>{{ cabecalho }}</th>
+                {% endfor %}
+            </tr>
+            {% for campos in dados.corpo_list %}
+                <tr>
+                {% for campo in  campos|slice:"1:" %}
+                
+                {% if forloop.first is True  %}
+                    <td><a href="{{ campos|first }}" target="_blank">{{ campo }}</a></td>
+                    <input type="hidden" name="_selected_action" value="{{ campos|first }}">
+                    <!-- _selected_action é padrão do django;
+                        retorna as pk's selecioanas na change_list-->
+
+                {% else %}
+                    <td>{{ campo }}</td>
+                {% endif %}
+                {% endfor %}
+                </tr>
+            {% endfor %}
+        </table>
+         <!-- Tabela from List: Fim  -->
+     </form>
+
+    <!-- Date Picker Django, Veja:-->
+    <!-- https://stackoverflow.com/questions/3367091/whats-the-cleanest-simplest-to-get-running-datepicker-in-django -->
+    <script type="text/javascript" src="{% static 'admin/js/core.js' %}"></script>
+    <script type="text/javascript" src="{% static 'admin/js/calendar.js' %}"></script>
+    <script type="text/javascript" src="{% static 'admin/js/admin/DateTimeShortcuts.js' %}"></script>
+</div>
+{% endblock content %}

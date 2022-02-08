@@ -1,0 +1,21 @@
+{% extends 'admin/submit_line.html' %}
+
+{% block bodyclass %}{{ block.super }} app-{{ opts.app_label }} model-{{ opts.model_name }} change-form{% endblock %}
+
+{% block submit-row %} 
+
+{% if not add %}
+    {% if opts.app_label|add:".view_"|add:opts.model_name in perms %}
+            <a href="{% url 'intrument_detalhe' pk_do_modelo %}" >Detalhe_Link</a>
+            <a href="{% url 'intrument_detalhe' pk_do_modelo %}" class="closelink">Detalhe_Link_Neutro</a>
+            <input type="button" onclick='location.href="{% url 'intrument_detalhe' pk_do_modelo %}"' value="Detalhe Button">
+    {% endif %}
+
+    {% if opts.app_label|add:".change_"|add:opts.model_name in perms %}
+        <input type="submit" value="Deleta Iguais e Preço 1000" name="_make_price_mil">
+    {% endif %}
+{% endif %}
+
+{{ block.super }}
+{% endblock %}
+

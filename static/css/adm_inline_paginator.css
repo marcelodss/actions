@@ -1,0 +1,38 @@
+/* VARIABLE DEFINITIONS */
+/* @import url('../admin/css/base.css'); */
+@import url('root_variables.css'); 
+
+.btn-page {
+  border: none;
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-top: 1px;
+  padding-bottom: 1px;
+  margin: 1px 1px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 13px;
+  
+}
+
+.page-selected {
+  background-color: var(--body-bg);
+  color: var(--body-quiet-color);
+  font-weight: bold;
+}
+
+.page-available {
+  background-color: var(--button-hover-bg);
+  color: var(--primary-fg) !important;
+}
+
+
+.page-available:hover {
+  background-color: var(--default-button-hover-bg) !important;
+}
+
+.results {
+  color: var(--body-loud-color);
+  text-align: left;
+}
