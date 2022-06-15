@@ -28,6 +28,13 @@ from django.contrib.admin import helpers
 
 from mixins.confirmation import ConfirmationMixin
 
+# # ========================================
+# Para testar tempo e número de conexões e
+# comparar save() e update()
+from django.db import connection, reset_queries
+import time
+# # ========================================
+
 class ParametroForm(ActionForm): # para action com parâmetro(s)
     parametro = forms.IntegerField(required=False, label="Parâmetro: ", initial=0)
 
@@ -156,10 +163,30 @@ class MovieAdmin(admin.ModelAdmin):
                 valida = validate_genero(genre)
                 if valida["retorno"] == True:
                     # updated = queryset.update(genre=genre)
+                    
+                    print("\n<<<<<<<<<<<<<<<<<<<")
+                    print('sql', queryset.query)
+            
                     for obj in queryset:
+                        # --------------------
+                        reset_queries()
+                        start_time = time.time()
+                        # --------------------
+
                         obj.genre = genre
                         obj.save()
                         updated = updated + 1
+                        
+                        # --------------------
+                        end_time = time.time()
+                        duration = (end_time - start_time)
+                        print("\n<<<<<<<<<<<<<<<<<<<")
+                        print(f'registro {updated}, durou  {round(duration, 3)} segundos')
+                        print(f'executou {len(connection.queries)} queries')
+                        print("-----------------------\n")
+                        reset_queries()
+                        # --------------------
+
                     self.message_user(request, ngettext(
                         '%d filme atualizado para ' + str(genre),
                         '%d filmes atualizados para ' + str(genre),
