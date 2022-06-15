@@ -27,6 +27,7 @@ class GenreFormComSave(forms.Form):
     data_inicio = forms.DateField(widget=AdminDateWidget(), label="DT InICiO",)
     from_date = forms.DateField(widget=AdminDateWidget(), label="FROM Date",)
     mydate = forms.DateField(widget=widgets.AdminDateWidget, label="Minha Datinha",)
+    mydate_format = forms.DateField(widget=widgets.AdminDateWidget(attrs={'type': 'date'}) , label="date format",)
     
     # VEJA-ME PARA DATE PICKER
     # https://qastack.com.br/programming/38601/using-django-time-date-widgets-in-custom-form 
