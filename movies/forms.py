@@ -1,6 +1,8 @@
 # https://docs.djangoproject.com/en/3.2/topics/forms/
 
+from operator import truediv
 from .models import (Genre, STATUS, validate_genero)
+from geral.validacoes import string_to_date_naive
 from django import forms
 from django.core.exceptions import ValidationError
 from django.contrib.admin.widgets import AdminDateWidget
@@ -24,13 +26,27 @@ class GenreFormComSave(forms.Form):
             )
     teste = forms.ChoiceField(required=False, label="Teste", choices = STATUS_TESTE,)
     geeks_field = forms.TypedChoiceField(required=False, label="GEEks field", choices = STATUS_GEEK, coerce = str)
-    data_inicio = forms.DateField(widget=AdminDateWidget(), label="DT InICiO",)
+    data_inicio = forms.DateField(required=True, widget=AdminDateWidget(), label="DT InICiO",)
     from_date = forms.DateField(widget=AdminDateWidget(), label="FROM Date",)
     mydate = forms.DateField(widget=widgets.AdminDateWidget, label="Minha Datinha",)
     mydate_format = forms.DateField(widget=widgets.AdminDateWidget(attrs={'type': 'date'}) , label="date format",)
     
     # VEJA-ME PARA DATE PICKER
     # https://qastack.com.br/programming/38601/using-django-time-date-widgets-in-custom-form 
+
+    def clean(self):
+        print('\n\nAqui....\n')
+        super(GenreFormComSave, self).clean()
+        print('\n\nAqui de novo....\n')
+        if 'data_inicio' in self.cleaned_data: 
+            print('\n\nAqui de novo no if....\n')
+            data_inicio = self.cleaned_data('data_inicio')
+            print('\n\nAqui de novo data inicio....\n', data_inicio)
+            if string_to_date_naive(data_inicio) == None:
+                print('\n\nAqui de novo no if do naive....\n')
+                raise ValidationError("Data inválida.")
+            else:
+                print('\n\nAqui de novo no else do naive....\n')
 
 class GenreFormComUpdate(forms.Form):
     genre = forms.ModelChoiceField(required=True, 
