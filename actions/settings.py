@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'movies',
     'historicos',
     'confirm',
+    'signals',
 ]
 
 MIDDLEWARE = [
